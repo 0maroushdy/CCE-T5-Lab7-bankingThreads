@@ -1,6 +1,5 @@
 package minibankingaccountsystem;
 import java.util.*;
-import java.io.*;
 
 /**
  *
