@@ -8,6 +8,10 @@ package minibankingaccountsystem;
  *
  * @author Omar
  */
-public class InvalidTransactionException {
+class InvalidTransactionException extends Exception {
+    
+    public InvalidTransactionException(String message) {
+        super(message);
+    }
     
 }
