@@ -17,12 +17,12 @@ public class BankAccount {
         this.id = id;
         this.balance = balance;
         this.transactionLog = new ArrayList<>();
-        transactionLog.add("Account created with balance: " + balance);
+        transactionLog.add("> Account created with balance: " + balance);
 
     }
     
     // adding balence method -----------------------------
-    public void Deposit(double amount)throws InvalidTransactionException{
+    public synchronized void Deposit(double amount)throws InvalidTransactionException{
         if (amount <= 0) {
             throw new InvalidTransactionException("Deposit failed: Amount must be greater than 0");
         }
@@ -35,15 +35,15 @@ public class BankAccount {
         
         String logEntry = "Deposited: +" + amount + ", New Balance: " + balance;
         transactionLog.add(logEntry);
-        System.out.println(logEntry);
+        System.out.println(">>"+logEntry);
     }
     
     // withdrawing balance method -----------------------------
-    public void Withdraw(double amount)throws InvalidTransactionException{
+    public synchronized void Withdraw(double amount)throws InvalidTransactionException{
         if (amount <= 0) {
             throw new InvalidTransactionException("Withdraw failed: Amount must be greater than 0");
-        } else if (amount < balance){
-            throw new InvalidTransactionException("Withdraw failed: مفيش رصيد كفاية يا صديقي");
+        } else if (amount > balance){
+            throw new InvalidTransactionException("Withdraw failed: insuffecient balance !!");
         }
             
         try{
@@ -54,7 +54,7 @@ public class BankAccount {
         
         String logEntry = "Withdrawed: -" + amount + ", New Balance: " + balance;
         transactionLog.add(logEntry);
-        System.out.println(logEntry);   
+        System.out.println(">"+logEntry);   
     }
     
     
@@ -65,7 +65,9 @@ public class BankAccount {
 
     // print transaction log -----------------------------
     public void printTransactionLog() {
+        System.out.println("------------------------------------");
         System.out.println("Transaction Log for Account ID: " + id);
+        System.out.println("------------------------------------");
         for (String log : transactionLog) {
             System.out.println(log);
         }
